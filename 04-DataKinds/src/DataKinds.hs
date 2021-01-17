@@ -1,11 +1,13 @@
-{-# LANGUAGE DataKinds         #-}
+{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE GADTs             #-}
-{-# LANGUAGE KindSignatures    #-}
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE KindSignatures #-}
 
+{- ORMOLU_DISABLE -}
 {- Today's -} module {- will focus on one of my favourite GHC magic tricks: the
 -} DataKinds {- extension. We'll see how and -} where {- to use it to enhance
 GADTs in particular, but there are plenty more cases to follow! -}
+{- ORMOLU_ENABLE -}
 
 ---
 
@@ -36,10 +38,13 @@ data Natural = Zero | Successor Natural
 -}
 
 class ConstraintKind (a :: Constraint)
+
 instance ConstraintKind (Eq Int)
 
 class TypeToType (a :: Type -> Type)
+
 instance TypeToType Maybe
+
 instance TypeToType (Either Int)
 
 {-
@@ -64,8 +69,11 @@ instance TypeToType (Either Int)
 -}
 
 class NaturalKind (a :: Natural)
+
 instance NaturalKind 'Zero
+
 instance NaturalKind ('Successor 'Zero)
+
 instance NaturalKind ('Successor ('Successor 'Zero))
 
 {-
@@ -78,7 +86,7 @@ instance NaturalKind ('Successor ('Successor 'Zero))
 -}
 
 data Vector (length :: Natural) (a :: Type) where
-  VNil  :: Vector 'Zero a
+  VNil :: Vector 'Zero a
   VCons :: a -> Vector n a -> Vector ('Successor n) a
 
 {-
@@ -99,7 +107,7 @@ head (VCons head _) = head
 -}
 
 zip :: Vector n a -> Vector n b -> Vector n (a, b)
-zip  VNil         VNil        = VNil
+zip VNil VNil = VNil
 zip (VCons x xs) (VCons y ys) = VCons (x, y) (zip xs ys)
 
 {-
