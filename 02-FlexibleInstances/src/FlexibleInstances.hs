@@ -1,5 +1,8 @@
-{- Now that we're experts in GADTs, today's -} module {- will be a /very/ short
-rationale for -} FlexibleInstances {- and -} where {- we need them. -}
+{-# LANGUAGE FlexibleInstances #-}
+
+{- Now that we're experts in GADTs, today's -}
+{- will be a /very/ short
+rationale for -} module FlexibleInstances {- and -} {- we need them. -} where
 
 ---
 
@@ -16,7 +19,9 @@ class SomeClass a
 -}
 
 instance SomeClass Bool
+
 instance SomeClass Int
+
 -- instance SomeClass String
 
 {-
@@ -38,7 +43,7 @@ instance SomeClass Int
   actually need this extension explicitly.
 -}
 
--- instance SomeClass [Char]
+instance SomeClass [Char]
 
 {-
   If you uncomment /this/ line, you'll see the error we saw with 'String' once
@@ -61,9 +66,11 @@ instance SomeClass Int
   constructor applied to a number of variables:
 -}
 
-instance SomeClass [a]          -- One variable
+instance SomeClass [a] -- One variable
+
 instance SomeClass (Either e a) -- Two variables
-instance SomeClass ()           -- No variables!
+
+instance SomeClass () -- No variables!
 
 {-
   Conversely, here are some that don't work:
@@ -71,19 +78,17 @@ instance SomeClass ()           -- No variables!
 
 -- The 'Maybe' type has a parameter that isn't a variable!
 
--- instance SomeClass (Maybe Bool)
-
+instance SomeClass (Maybe Bool)
 
 -- The variables are not unique.
 
--- instance SomeClass (Either e e)
-
+instance SomeClass (Either e e)
 
 -- The variables are unique, but one of 'Either''s parameters isn't a variable:
 -- @Maybe a@ is a type that /contains/ a variable, which fails GHC's check. It
 -- has to be a type variable, with no exceptions.
 
--- instance SomeClass (Either e (Maybe a))
+instance SomeClass (Either e (Maybe a))
 
 {-
   That literally is it. The 'FlexibleInstances' extension lifts these
