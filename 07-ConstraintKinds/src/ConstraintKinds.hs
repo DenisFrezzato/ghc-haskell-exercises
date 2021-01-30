@@ -2,10 +2,12 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE KindSignatures #-}
 
+{- ORMOLU_DISABLE -}
 {- Two of the -} module {- topics I found particularly difficult to place were
 -} ConstraintKinds {- and @PolyKinds@. I think as we explore concepts like
 MultiParamTypeClasses, it will become obvious why it's hard to say exactly
 -} where {- it belongs. Anyway, all that for later; let's go! -}
+{- ORMOLU_ENABLE -}
 
 import Data.Kind (Constraint, Type)
 
