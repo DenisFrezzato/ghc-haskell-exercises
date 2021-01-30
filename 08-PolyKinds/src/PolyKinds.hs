@@ -2,9 +2,11 @@
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeFamilies #-}
 
+{- ORMOLU_DISABLE -}
 {- After a brief hiatus, we return with a -} module {- whose focus is on
 /kind polymorphism/, which is enabled by the -} PolyKinds {- extension. We'll
 find out -} where {- to use it, and wonder how we could do without it! -}
+{- ORMOLU_ENABLE -}
 
 {-
   Haskell, in general, /loves/ the notion of type polymorphism. Let's take a
@@ -86,8 +88,8 @@ data Secrets
 
 type family Smuggler (x :: k) :: k where
   Smuggler (IO (Secrets, a)) = IO a
-  Smuggler 0                 =    1
-  Smuggler a                 =    a
+  Smuggler 0 = 1
+  Smuggler a = a
 
 {-
   Huh. It seems that, while we said this function would work for /any/ kind, we
@@ -99,7 +101,7 @@ type family Smuggler (x :: k) :: k where
 
 smuggle :: a -> a
 -- smuggle (xs :: IO (Secrets, a)) = fmap snd xs
-smuggle a                       = a
+smuggle a = a
 
 {-
   Once you enable the extensions as GHC tells you, the error is that we
