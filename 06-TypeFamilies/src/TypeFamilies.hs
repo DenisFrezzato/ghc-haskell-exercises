@@ -1,10 +1,12 @@
-{-# LANGUAGE DataKinds    #-}
-{-# LANGUAGE GADTs        #-}
+{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE GADTs #-}
 {-# LANGUAGE TypeFamilies #-}
 
+{- ORMOLU_DISABLE -}
 {- Today's -} module {- will be a very brief introduction to -} TypeFamilies {-
 and their uses. We're not going to go -} where {- Csongor's talk went, though
 there is plenty of further reading to be done if you're interested! -}
+{- ORMOLU_ENABLE -}
 
 import Data.Kind (Type)
 
@@ -15,7 +17,7 @@ data Nat = Z | S Nat
 -}
 
 add :: Nat -> Nat -> Nat
-add  Z    y = y
+add Z y = y
 add (S x) y = S (add x y)
 
 {-
@@ -25,7 +27,7 @@ add (S x) y = S (add x y)
 -}
 
 type family Add (x :: Nat) (y :: Nat) :: Nat where
-  Add  'Z    y = y
+  Add 'Z y = y
   Add ('S x) y = 'S (Add x y)
 
 {-
@@ -53,7 +55,7 @@ type instance Open (Maybe Bool) = IO Int
 -}
 
 data SBool (value :: Bool) where
-  STrue  :: SBool 'True
+  STrue :: SBool 'True
   SFalse :: SBool 'False
 
 {-
@@ -63,7 +65,7 @@ data SBool (value :: Bool) where
 -}
 
 type family Not (input :: Bool) :: Bool where
-  Not 'True  = 'False
+  Not 'True = 'False
   Not 'False = 'True
 
 {-
@@ -71,7 +73,7 @@ type family Not (input :: Bool) :: Bool where
 -}
 
 not :: SBool input -> SBool (Not input)
-not STrue  = SFalse
+not STrue = SFalse
 not SFalse = STrue
 
 {-
@@ -84,7 +86,7 @@ not SFalse = STrue
 -}
 
 type family Subtract (x :: Nat) (y :: Nat) :: Nat where
-  Subtract     x   'Z    = x
+  Subtract x 'Z = x
   Subtract ('S x) ('S y) = Subtract x y
 
 {-
